@@ -7,9 +7,8 @@ const mobile = document.querySelector(".container")
 
 let x
 let y
-let flag = false
+let flag = false // a flag to track some operations within the code
 let operation = null
-let active = Array.from(arithmatics).some(arithm => arithm.classList.contains("clicked"))
 
 // event listenrs 
 numbers.forEach(num => {
@@ -20,7 +19,7 @@ numbers.forEach(num => {
     })
 
 })
-
+//clear function to backspace or clear all data
 clear.addEventListener("click", (e) => {
     e.preventDefault()
     let check = clear.textContent
@@ -31,30 +30,33 @@ clear.addEventListener("click", (e) => {
     }
     coolEffect(`black`)
 })
-
+// assigning event listeners and update function to each operation button
 arithmatics.forEach(oper => {
-    oper.addEventListener("mousedown", (e)=>{
+    oper.addEventListener("click", (e) => {
         e.preventDefault()
         updateData(oper)
         coolEffect(`rgb(0, 255, 98)`)
     })
 })
-
-equal.addEventListener("click", ()=>{
+// assign operate function to equal button
+equal.addEventListener("click", () => {
     operate()
     coolEffect(`rgb(0, 255, 98)`)
 })
-sign.addEventListener("click", ()=>{
+
+sign.addEventListener("click", () => {
     switchSign()
     coolEffect(`black`)
 })
-percent.addEventListener("click", ()=>{
+percent.addEventListener("click", () => {
     percentage()
     coolEffect(`black`)
 })
+// DOM event listener for keyboard keyStrokes 
+document.addEventListener("keydown", keyboardInputs)
 
 // functions 
-function updateDisplay(num) {
+function updateDisplay(num) { // used to update display when num is clicked
     let result = display.textContent
     const regx = /\.|^0$/
     if (!flag) {
@@ -76,7 +78,7 @@ function updateDisplay(num) {
     }
 }
 
-function updateData(oper) {
+function updateData(oper) { // used to update data stores when an operation key is clicked
     let result = display.textContent
     flag = false
     if ((result !== "0" && result !== "0.")) {
@@ -95,7 +97,7 @@ function updateData(oper) {
     }
 }
 
-function clearData() {
+function clearData() { // reset calc to initial state
     x = undefined
     y = undefined
     flag = false
@@ -104,7 +106,7 @@ function clearData() {
     arithmatics.forEach(item => item.classList.toggle("clicked", false))
 }
 
-function backSpace() {
+function backSpace() { // backspace the display
     let result = display.textContent
     result = result.slice(0, result.length - 1)
     display.textContent = result
@@ -113,9 +115,9 @@ function backSpace() {
         display.textContent = `0`
         flag = false
     }
-}
+} // here it bugged from me , eg. when a number is represented in exponential form it backspaces and deform the number, i didn't bother fixing it ri8 now, cuz i gtg to sleep cuz work early morning yay!, sry.
 
-function switchSign() {
+function switchSign() { // this switch the sign of the number displayed
     const regs = /-/
     let result = display.textContent
     if (parseInt(result) !== 0) {
@@ -128,7 +130,7 @@ function switchSign() {
     }
 }
 
-function percentage() {
+function percentage() { // simply divides by 100
     let result = display.textContent
     if (result !== "0" && result !== "0.") {
         result = (parseFloat(result) / 100).toPrecision(3)
@@ -140,8 +142,8 @@ function percentage() {
     }
 }
 
-function operate() {
-    function restrains(x) {
+function operate() { // the equal function
+    function restrains(x) { // contains number of digits displayed not to deform the container by overflowing
         if (String(x).length < 10) {
             display.textContent = x
         } else {
@@ -149,7 +151,7 @@ function operate() {
         }
         y = 0
     }
-    function calc() {
+    function calc() { // checks for which operation to be done using the pressed operation button
         if (operation.id === "add") {
             x = x + y
             restrains(x)
@@ -172,11 +174,11 @@ function operate() {
             }
         }
     }
-    try {
+    try { // preform operation upon data store , throws an error if no operation is selected 
         y = Number(display.textContent)
         flag = false
         clear.textContent = `C`
-        arithmatics.forEach(oper=> oper.classList.toggle("clicked",false))
+        arithmatics.forEach(oper => oper.classList.toggle("clicked", false))
         if (operation) {
             calc()
         } else {
@@ -187,12 +189,76 @@ function operate() {
     }
 }
 
-function coolEffect(color) {
+function coolEffect(color) { // some css effects 
     mobile.style.boxShadow = `0px 0px 115px 45px ${color}`
     mobile.style.border = `5px solid ${color}`
-    setTimeout(()=> {
+    setTimeout(() => {
         mobile.style.boxShadow = ``
         mobile.style.border = ``
-    },300)
+    }, 300)
 }
 
+function keyboardInputs(e) { // keyboard event for easier functionality , didn't add buttons for switching signs and percent cuz no clear key for both 
+    let num = Array.from(numbers)
+    let numpad = Array.from(arithmatics)
+    console.log(`key : ${e.key}`)
+    switch (e.key) {
+        case `0`:
+            num.find(item => item.id === "zero").click()
+            break;
+        case `1`:
+            num.find(item => item.id === "one").click()
+            break;
+        case `2`:
+            num.find(item => item.id === "two").click()
+            break;
+        case `3`:
+            num.find(item => item.id === "three").click()
+            break;
+        case `4`:
+            num.find(item => item.id === "four").click()
+            break;
+        case `5`:
+            num.find(item => item.id === "five").click()
+            break;
+        case `6`:
+            num.find(item => item.id === "six").click()
+            break;
+        case `7`:
+            num.find(item => item.id === "seven").click()
+            break;
+        case `8`:
+            num.find(item => item.id === "eight").click()
+            break;
+        case `9`:
+            num.find(item => item.id === "nine").click()
+            break;
+        case `.`:
+            num.find(item => item.id === "point").click()
+            break;
+        case `/`:
+        case 'NumpadDivide':
+            numpad.find(item => item.id === "divide").click()
+            break;
+        case `*`:
+        case 'NumpadMultiply':
+            numpad.find(item => item.id === "multiply").click()
+            break;
+        case `-`:
+        case `NumpadSubtract`:
+            numpad.find(item => item.id === "subtract").click()
+            break;
+        case `+`:
+        case `NumpadAdd`:
+            numpad.find(item => item.id === "add").click()
+            break;
+        case `Enter`:
+            equal.click()
+            break
+        case `Backspace`:
+            clear.click()
+            break
+        default:
+            break;
+    }
+}
