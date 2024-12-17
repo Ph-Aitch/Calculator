@@ -1,0 +1,147 @@
+*,
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-size: 18px;
+    min-height: 100vh;
+}
+
+main {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    background-color: #333;
+}
+
+.container {
+    width: 400px;
+    height: 650px;
+    background-color: black;
+    color: whitesmoke;
+    border: 5px solid orange;
+    border-radius: 40px;
+    box-shadow: 0px 0px 115px 15px orange;
+    display: grid;
+    grid-template-areas:
+        "dp dp dp dp"
+        "dp dp dp dp"
+        "clr sgn pct btn"
+        "num num num btn"
+        "num num num btn"
+        "num num num btn"
+        "zr zr pt btn";
+    align-items: center;
+    justify-content: space-evenly;
+    transition: box-shadow .3s ease;
+}
+
+.display {
+    grid-area: dp;
+    width: 100%;
+    height: 150px;
+    color: white;
+    text-align: end;
+    place-content: center;
+    font-size: 3.8rem;
+    font-family: monospace;
+}
+
+.circle {
+    width: 80px;
+    height: 80px;
+    background-color: bisque;
+    border-radius: 50%;
+    color: black;
+    place-content: center;
+    text-align: center;
+    font-size: 2rem;
+    cursor: default;
+}
+
+.zero {
+    grid-area: zr;
+    place-content: center;
+    text-align: start;
+    font-size: 2rem;
+    width: 180px;
+    height: 80px;
+    background-color: #333;
+    border-radius: 25vh;
+    color: white;
+    padding-left: 1em;
+    cursor: default;
+}
+
+.num,
+.point {
+    color: white;
+    background-color: #333;
+}
+
+.sign,
+.clear,
+.percent {
+    color: black;
+    background-color: #aaa;
+}
+
+.divide,
+.multiply,
+.subtract,
+.add,
+.equal {
+    color: whitesmoke;
+    background-color: orange;
+    font-size: 2.5rem;
+}
+
+.num:hover,
+.point:hover,
+.zero:hover {
+    text-shadow: 0px 0px 5px whitesmoke;
+}
+
+.num:active,
+.point:active,
+.zero:active {
+    box-shadow: inset 0px 0px 12px 0px whitesmoke;
+    background-color: rgb(0, 183, 255);
+}
+
+.sign:hover,
+.clear:hover,
+.percent:hover,
+.divide:hover,
+.multiply:hover,
+.subtract:hover,
+.add:hover,
+.equal:hover {
+    text-shadow: 0px 0px 5px #333;
+}
+
+.sign:active,
+.clear:active,
+.percent:active {
+    box-shadow: inset 0px 0px 12px 0px #333;
+}
+
+.divide:active,
+.multiply:active,
+.subtract:active,
+.add:active,
+.equal:active {
+    background-color: rgb(0, 255, 98);
+    box-shadow: inset 0px 0px 12px 0px #333;
+}
+
+.clicked {
+    background-color:  rgb(0, 255, 98);
+}
